@@ -26,14 +26,19 @@ namespace ZipSample.test
 
             while (firstEnumerator.MoveNext())
             {
-                var secondEnumerator = new HashSet<int>(second).GetEnumerator();
-                while (secondEnumerator.MoveNext())
+                var secondEnumerator = new HashSet<int>(second);
+
+                if (secondEnumerator.Contains(firstEnumerator.Current))
                 {
-                    if (firstEnumerator.Current == secondEnumerator.Current)
-                    {
-                        yield return firstEnumerator.Current;
-                    }
+                    yield return firstEnumerator.Current;
                 }
+                //while (secondEnumerator.MoveNext())
+                //{
+                //    if (firstEnumerator.Current == secondEnumerator.Current)
+                //    {
+                //        yield return firstEnumerator.Current;
+                //    }
+                //}
             }
         }
     }
