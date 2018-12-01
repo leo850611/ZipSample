@@ -23,7 +23,16 @@ namespace ZipSample.test
 
         private IEnumerable<int> MyConcat(IEnumerable<int> first, IEnumerable<int> second)
         {
-            throw new NotImplementedException();
+            var firstEnumerator = first.GetEnumerator();
+            var secondEnumerator = second.GetEnumerator();
+            while (firstEnumerator.MoveNext())
+            {
+                yield return firstEnumerator.Current;
+            }
+            while (secondEnumerator.MoveNext())
+            {
+                yield return secondEnumerator.Current;
+            }
         }
     }
 }
