@@ -11,8 +11,8 @@ namespace ZipSample.test
         [TestMethod]
         public void intersect_integers()
         {
-            var first = new List<int> { 1, 3, 5 };
-            var second = new List<int> { 5, 5, 3, 7, 9 };
+            var first = new List<int> { 1, 3, 3, 5 };
+            var second = new List<int> { 5, 5, 3, 3, 7, 9 };
 
             var expected = new List<int> { 3, 5 };
 
