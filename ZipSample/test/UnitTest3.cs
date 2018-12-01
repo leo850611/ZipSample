@@ -27,10 +27,49 @@ namespace ZipSample.test
             Assert.AreEqual(DateTime.MaxValue.ToString(), betDto.Date);
         }
 
+        [TestMethod]
+        public void BetToBetDtoPass2()
+        {
+            var bet = new Bet()
+            {
+                ID = 1,
+                Stake = 2,
+                CreateDate = DateTime.MaxValue
+            };
+            var betDto = ToBetDto(bet, new BetMapper());
+
+            Assert.AreEqual(1, betDto.BetId);
+            Assert.AreEqual(2, betDto.Amonut);
+            Assert.AreEqual(DateTime.MaxValue.ToString(), betDto.Date);
+        }
+
+        private BetDto ToBetDto(Bet bet, IBetMapper betMapper)
+        {
+            return betMapper.Translate(bet);
+        }
+
         private BetDto ToBetDto(Bet bet, Func<Bet, BetDto>func)
         {
             return func(bet);
         }
+    }
+
+    public class BetMapper : IBetMapper
+    {
+        public BetDto Translate(Bet bet)
+        {
+            return new BetDto()
+            {
+                BetId = bet.ID,
+                Amonut = (int) bet.Stake,
+                Date = bet.CreateDate.ToString()
+            };
+        }
+    }
+
+    public interface IBetMapper
+    {
+        BetDto Translate(Bet bet);
     }
 
     public class BetDto
