@@ -1,4 +1,5 @@
-﻿using ExpectedObjects;
+﻿using System;
+using ExpectedObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,8 @@ namespace ZipSample.test
 
         public int GetHashCode(Girl obj)
         {
-            return obj.Name.GetHashCode();
+            return Tuple.Create(obj.Name, obj.Age).GetHashCode();
+            //return new {obj.Name, obj.Age}.GetHashCode();
         }
     }
 }
