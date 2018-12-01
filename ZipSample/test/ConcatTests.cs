@@ -21,7 +21,19 @@ namespace ZipSample.test
             expected.ToExpectedObject().ShouldEqual(actual);
         }
 
-        private IEnumerable<int> MyConcat(IEnumerable<int> first, IEnumerable<int> second)
+        [TestMethod]
+        public void concat_string()
+        {
+            var first = new [] {"1", "3", "5"};
+            var second = new [] {"2", "4", "6"};
+
+            var actual = MyConcat(first, second).ToArray();
+
+            var expected = new [] { "1", "3", "5" , "2", "4", "6" };
+            expected.ToExpectedObject().ShouldEqual(actual);
+        }
+
+        private IEnumerable<TSource> MyConcat<TSource>(IEnumerable<TSource> first, IEnumerable<TSource> second)
         {
             var firstEnumerator = first.GetEnumerator();
             var secondEnumerator = second.GetEnumerator();
