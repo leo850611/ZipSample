@@ -61,6 +61,7 @@
     <Compile Include="test\UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="test\UnitTest2.cs" />
+    <Compile Include="test\UnitTest3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

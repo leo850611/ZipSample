@@ -49,25 +49,15 @@ namespace ZipSample.test
 
         public bool IsValid()
         {
-            new Dictionary<int, Func<bool>>
+            var dictionary = new Dictionary<int, Func<bool>>
             {
                 {106, Year106 },
+                {107, Year107 },
             };
-            
-            if (_year == 106)
-            {
-                if (Year106()) return true;
-            }
-
-            if (_year == 107)
-            {
-                if (Year107(out var isValid)) return isValid;
-            }
-
-            return false;
+            return dictionary.ContainsKey(_year) && dictionary[_year]();
         }
 
-        private bool Year107(out bool isValid)
+        private bool Year107()
         {
             int con = -1;
             var isNumbel = Int32.TryParse(_content, out con);
@@ -75,37 +65,27 @@ namespace ZipSample.test
             {
                 if (con == 2 || con == 12)
                 {
-                    {
-                        isValid = false;
-                        return true;
-                    }
+                    return false;
                 }
 
                 if ((con >= 1 && con <= 14) || con == 99)
                 {
-                    {
-                        isValid = true;
-                        return true;
-                    }
+                    return true;
                 }
             }
 
             if (_content == "2a" || _content == "2b")
             {
-                {
-                    isValid = true;
-                    return true;
-                }
+                return true;
             }
 
-            isValid = false;
             return false;
         }
 
         private bool Year106()
         {
             int con = -1;
-            var isNumbel = Int32.TryParse(_content, out con);
+            Int32.TryParse(_content, out con);
             if ((con >= 1 && con <= 11) || con == 99)
             {
                 return true;
