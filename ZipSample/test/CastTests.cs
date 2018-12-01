@@ -25,11 +25,11 @@ namespace ZipSample.test
         public void cast_integers_with_cast_failed()
         {
             var arrayList = new ArrayList { 2, "4", 6 };
-            Action action = () => MyCast<string>(arrayList).ToList();
+            Action action = () => MyCast<int>(arrayList).ToList();
             action.Should().Throw<InvalidCastException>();
         }
 
-        private IEnumerable<T> MyCast<T>(IEnumerable arrayList)
+        private IEnumerable<TResult> MyCast<TResult>(IEnumerable arrayList)
         {
             var enumerator = arrayList.GetEnumerator();
             while (enumerator.MoveNext())
@@ -43,7 +43,7 @@ namespace ZipSample.test
                 //{
                 //    throw new InvalidCastException();
                 //}
-                yield return (T)enumerator.Current;
+                yield return (TResult)enumerator.Current;
             }
         }
     }
