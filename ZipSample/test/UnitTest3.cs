@@ -43,18 +43,18 @@ namespace ZipSample.test
             Assert.AreEqual(DateTime.MaxValue.ToString(), betDto.Date);
         }
 
-        private BetDto ToBetDto(Bet bet, IBetMapper betMapper)
+        private TResult ToBetDto<TSource, TResult>(TSource bet, IBetMapper<TSource, TResult> betMapper)
         {
             return betMapper.Translate(bet);
         }
 
-        private BetDto ToBetDto(Bet bet, Func<Bet, BetDto>func)
+        private TResult ToBetDto<TSource, TResult>(TSource bet, Func<TSource, TResult>func)
         {
             return func(bet);
         }
     }
 
-    public class BetMapper : IBetMapper
+    public class BetMapper : IBetMapper<Bet, BetDto>
     {
         public BetDto Translate(Bet bet)
         {
@@ -67,9 +67,9 @@ namespace ZipSample.test
         }
     }
 
-    public interface IBetMapper
+    public interface IBetMapper<TSource, TResult>
     {
-        BetDto Translate(Bet bet);
+        TResult Translate(TSource bet);
     }
 
     public class BetDto
