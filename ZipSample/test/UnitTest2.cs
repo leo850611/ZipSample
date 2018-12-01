@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace ZipSample.test
@@ -48,35 +49,66 @@ namespace ZipSample.test
 
         public bool IsValid()
         {
-            int con = -1;
-            var isNumbel = Int32.TryParse(_content, out con);
+            new Dictionary<int, Func<bool>>
+            {
+                {106, Year106 },
+            };
+            
             if (_year == 106)
             {
-                if ((con >= 1 && con <= 11) || con == 99)
-                {
-                    return true;
-                }
+                if (Year106()) return true;
             }
 
             if (_year == 107)
             {
-                if (isNumbel)
-                {
-                    if (con == 2 || con == 12)
-                    {
-                        return false;
-                    }
+                if (Year107(out var isValid)) return isValid;
+            }
 
-                    if ((con >= 1 && con <= 14) || con == 99)
+            return false;
+        }
+
+        private bool Year107(out bool isValid)
+        {
+            int con = -1;
+            var isNumbel = Int32.TryParse(_content, out con);
+            if (isNumbel)
+            {
+                if (con == 2 || con == 12)
+                {
                     {
+                        isValid = false;
                         return true;
                     }
                 }
 
-                if (_content == "2a" || _content == "2b")
+                if ((con >= 1 && con <= 14) || con == 99)
                 {
+                    {
+                        isValid = true;
+                        return true;
+                    }
+                }
+            }
+
+            if (_content == "2a" || _content == "2b")
+            {
+                {
+                    isValid = true;
                     return true;
                 }
+            }
+
+            isValid = false;
+            return false;
+        }
+
+        private bool Year106()
+        {
+            int con = -1;
+            var isNumbel = Int32.TryParse(_content, out con);
+            if ((con >= 1 && con <= 11) || con == 99)
+            {
+                return true;
             }
 
             return false;
