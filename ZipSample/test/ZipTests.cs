@@ -15,7 +15,7 @@ namespace ZipSample.test
             var girls = Repository.Get3Girls();
             var keys = Repository.Get5Keys();
 
-            var girlAndBoyPairs = MyZip(girls, keys).ToList();
+            var girlAndBoyPairs = MyZip(girls, keys, (g, k) =>Tuple.Create(g.Name, k.OwnerBoy.Name)).ToList();
             var expected = new List<Tuple<string, string>>
             {
                 Tuple.Create("Jean", "Joey"),
@@ -26,13 +26,13 @@ namespace ZipSample.test
             expected.ToExpectedObject().ShouldEqual(girlAndBoyPairs);
         }
 
-        private IEnumerable<Tuple<string, string>> MyZip(IEnumerable<Girl> girls, IEnumerable<Key> keys)
+        private IEnumerable<TResult> MyZip<TResult>(IEnumerable<Girl> girls, IEnumerable<Key> keys, Func<Girl, Key, TResult> func)
         {
             var girlsEnumerator = girls.GetEnumerator();
             var keyEnumerator = keys.GetEnumerator();
             while (girlsEnumerator.MoveNext() && keyEnumerator.MoveNext())
             {
-                yield return Tuple.Create(girlsEnumerator.Current.Name, keyEnumerator.Current.OwnerBoy.Name);
+                yield return func(girlsEnumerator.Current, keyEnumerator.Current);
             }
         }
     }
