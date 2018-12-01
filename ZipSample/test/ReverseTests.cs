@@ -23,18 +23,7 @@ namespace ZipSample.test
 
         private IEnumerable<string> MyReverse(IEnumerable<string> source)
         {
-            var enumerator = source.GetEnumerator();
-
-            Stack myStack = new Stack();
-            while (enumerator.MoveNext())
-            {
-                myStack.Push(enumerator.Current);
-            }
-
-            while (myStack.Count>0)
-            {
-                yield return (string) myStack.Pop();
-            }
+            return new Stack<string>(source);
         }
     }
 }
