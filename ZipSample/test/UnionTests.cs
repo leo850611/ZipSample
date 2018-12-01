@@ -42,11 +42,11 @@ namespace ZipSample.test
                 new Girl(){Name = "leo", Age = 18},
             };
 
-            var actual = MyGirlUnion(first, second, new MyComparer()).ToList();
+            var actual = MyUnion(first, second, new MyComparer()).ToList();
             expected.ToExpectedObject().ShouldEqual(actual);
         }
 
-        private IEnumerable<T> MyGirlUnion<T>(IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
+        private IEnumerable<T> MyUnion<T>(IEnumerable<T> first, IEnumerable<T> second, IEqualityComparer<T> comparer)
         {
             var hashSet = new HashSet<T>(comparer);
             var firstEnumerator = first.GetEnumerator();
@@ -70,7 +70,7 @@ namespace ZipSample.test
 
         private IEnumerable<int> MyUnion(IEnumerable<int> first, IEnumerable<int> second)
         {
-            return MyGirlUnion(first, second, EqualityComparer<int>.Default);
+            return MyUnion(first, second, EqualityComparer<int>.Default);
         }
     }
 
