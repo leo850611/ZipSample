@@ -14,10 +14,10 @@ namespace ZipSample.test
         [TestMethod]
         public void cast_integers()
         {
-            var arrayList = new ArrayList { 2, 6 };
-            var actual = MyCast(arrayList).ToList();
+            var arrayList = new ArrayList { "2", "6" };
+            var actual = MyCast<string>(arrayList).ToList();
 
-            var expected = new List<int> { 2, 6 };
+            var expected = new List<string> { "2", "6" };
             expected.ToExpectedObject().ShouldEqual(actual);
         }
 
@@ -25,24 +25,25 @@ namespace ZipSample.test
         public void cast_integers_with_cast_failed()
         {
             var arrayList = new ArrayList { 2, "4", 6 };
-            Action action = () => MyCast(arrayList).ToList();
+            Action action = () => MyCast<string>(arrayList).ToList();
             action.Should().Throw<InvalidCastException>();
         }
 
-        private IEnumerable<int> MyCast(IEnumerable arrayList)
+        private IEnumerable<T> MyCast<T>(IEnumerable arrayList)
         {
             var enumerator = arrayList.GetEnumerator();
             while (enumerator.MoveNext())
             {
-                if (enumerator.Current is int)
-                {
+                //if (enumerator.Current is int)
+                //{
 
-                    yield return (int)enumerator.Current;
-                }
-                else
-                {
-                    throw new InvalidCastException();
-                }
+                //    yield return (int)enumerator.Current;
+                //}
+                //else
+                //{
+                //    throw new InvalidCastException();
+                //}
+                yield return (T)enumerator.Current;
             }
         }
     }
