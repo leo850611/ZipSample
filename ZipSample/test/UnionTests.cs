@@ -1,6 +1,6 @@
-﻿using System;
-using ExpectedObjects;
+﻿using ExpectedObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -70,24 +70,7 @@ namespace ZipSample.test
 
         private IEnumerable<int> MyUnion(IEnumerable<int> first, IEnumerable<int> second)
         {
-            var hashSet = new HashSet<int>();
-            var firstEnumerator = first.GetEnumerator();
-            while (firstEnumerator.MoveNext())
-            {
-                if (hashSet.Add(firstEnumerator.Current))
-                {
-                    yield return firstEnumerator.Current;
-                }
-            }
-
-            var secondEnumerator = second.GetEnumerator();
-            while (secondEnumerator.MoveNext())
-            {
-                if (hashSet.Add(secondEnumerator.Current))
-                {
-                    yield return secondEnumerator.Current;
-                }
-            }
+            return MyGirlUnion(first, second, EqualityComparer<int>.Default);
         }
     }
 
