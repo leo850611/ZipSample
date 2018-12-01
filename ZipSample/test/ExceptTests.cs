@@ -22,16 +22,16 @@ namespace ZipSample.test
 
         private IEnumerable<int> MyExcept(IEnumerable<int> first, IEnumerable<int> second)
         {
-            var hashSet = new HashSet<int>(first);
+            var hashSet = new HashSet<int>(second);
+            var firstEnumerator = first.GetEnumerator();
 
-            var secondEnumerator = second.GetEnumerator();
-
-            while (secondEnumerator.MoveNext())
+            while (firstEnumerator.MoveNext())
             {
-                hashSet.Remove(secondEnumerator.Current);
+                if (hashSet.Add(firstEnumerator.Current))
+                {
+                    yield return firstEnumerator.Current;
+                }
             }
-
-            return hashSet;
         }
     }
 }
