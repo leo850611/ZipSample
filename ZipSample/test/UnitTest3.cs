@@ -14,7 +14,7 @@ namespace ZipSample.test
             {
                 ID = 1,
                 Stake = 2,
-                CreateDate = DateTime.MaxValue
+                CreateDate = DateTime.MaxValue,
             };
             var betDto = ToBetDto(bet, (x) => new BetDto(){
                 BetId = x.ID,
@@ -41,6 +41,35 @@ namespace ZipSample.test
             Assert.AreEqual(1, betDto.BetId);
             Assert.AreEqual(2, betDto.Amonut);
             Assert.AreEqual(DateTime.MaxValue.ToString(), betDto.Date);
+        }
+
+        [TestMethod]
+        public void BetToBetDtoPass3()
+        {
+            var bet = new Bet()
+            {
+                ID = 1,
+                Stake = 2,
+                CreateDate = DateTime.MaxValue,
+                Status = "R",
+            };
+            var betDto = ToBetDto<Bet, BetDto>(bet);
+
+            Assert.AreEqual(1, betDto.BetId);
+            Assert.AreEqual(2, betDto.Amonut);
+            Assert.AreEqual(DateTime.MaxValue.ToString(), betDto.Date);
+        }
+
+
+
+        private TResult ToBetDto<TSource, TResult>(TSource source)
+        {
+            foreach (var propertyInfo in source.GetType().GetProperties())
+            {
+                source.GetType().GetProperty(propertyInfo.Name).SetValue(source, null);
+            }
+
+            return ;
         }
 
         private TResult ToBetDto<TSource, TResult>(TSource bet, IBetMapper<TSource, TResult> betMapper)
@@ -77,6 +106,7 @@ namespace ZipSample.test
         public int BetId { get; set; }
         public string Date { get; set; }
         public int Amonut { get; set; }
+        public string Status { get; set; }
     }
 
     public class Bet
@@ -84,5 +114,6 @@ namespace ZipSample.test
         public int ID { get; set; }
         public decimal Stake { get; set; }
         public DateTime CreateDate { get; set; }
+        public string Status { get; set; }
     }
 }
